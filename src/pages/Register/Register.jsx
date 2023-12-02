@@ -29,7 +29,7 @@ function Register() {
   }
     return (
     <div className="mt-40 mx-20">
-      <div className="flex justify-center mt-32  mb-10 max-w-md  mx-auto shadow-lg bg-gray-100 px-8">
+      <div className="flex justify-center mt-32  mb-10 max-w-md  mx-auto  shadow-lg bg-gray-100 px-8">
         <Form className="w-full max-w-2xl" onFinish={onFinish}>
           <p className="text-2xl text-black font-bold text-center mb-5 mt-4">
             新規登録フォーム
