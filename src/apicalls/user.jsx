@@ -28,3 +28,37 @@ export const CreateUser = async (payload) => {
         return error
     }
 }
+
+export const LogiinUser = async (payload) => {
+    try {
+
+        const qry = query(
+            collection(firestoreDatabase, "users"),
+            where("email", "==", payload.email)
+        )
+
+        const userSnapshots = await getDocs(qry)
+        if(userSnapshots.size === 0) 
+        {
+            throw new Error("このユーザーは存在しません。")
+        }
+
+        const user = userSnapshots.docs[0].data()
+        const bytes = CryptoJS.AES.decrypt(user.password, "sheyjobs-lite")
+        const originalPassword = bytes.toString(CryptoJS.enc.Utf8)
+
+        if(originalPassword !== payload.password)
+        {
+            throw new Error("パスワードまたはメールアドレスが間違っています。")
+        }
+
+        return {
+            success: true,
+            message: "ユーザーログインが正常に成功しました。",
+            data: user
+        }
+        
+    } catch (error) {
+        return error
+    }
+}

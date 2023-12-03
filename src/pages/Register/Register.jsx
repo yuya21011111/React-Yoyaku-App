@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Form, message } from "antd"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { CreateUser } from '../../apicalls/user'
 import 'antd/dist/antd.css'
 
@@ -11,13 +11,14 @@ message.config({
 });
 
 function Register() {
-  
+  const navigate = useNavigate()
   const onFinish = async (values) => {
    try {
     const respons = await CreateUser(values)
     if(respons.success)
     {
       message.success(respons.message)
+      navigate("/login")
     }else
     {
       throw new Error(respons.message)
@@ -25,8 +26,13 @@ function Register() {
    } catch (error) {
     message.error(error.message)
    }
-
   }
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user"))
+    if(user) navigate("/")
+  },[])
+
     return (
     <div className="mt-40 mx-20">
       <div className="flex justify-center mt-32  mb-10 max-w-md  mx-auto  shadow-lg bg-gray-100 px-8">
