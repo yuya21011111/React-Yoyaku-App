@@ -38,11 +38,6 @@ function ProtectedRoute({ children }) {
         ><FontAwesomeIcon className='h-5 w-5 mr-2' icon={faPaste} />test
       </Link>
     </li>
-    <li className="border-b md:border-none">
-      <Link to="/"className="block px-8 py-2 my-4 hover:bg-gray-100 rounded"
-        ><FontAwesomeIcon className='h-5 w-5 mr-2' icon={faRightToBracket} />Login
-      </Link>
-    </li> 
     {/* <div className='absolute top-0 right-0 p-4'>
     <li className="border-b md:border-none">
       <Link to="/"className="block px-8 py-2 my-4 hover:bg-gray-100 rounded"
@@ -51,15 +46,27 @@ function ProtectedRoute({ children }) {
     </li> 
     </div> */}
 
-    { user ?  <li className="border-b md:border-none">
-      <Link to="/logout"className="block px-8 py-2 my-4 hover:bg-gray-100 rounded"
+    { user ?  
+    <li className="border-b md:border-none">
+      <Link to="/profile"className="block px-8 py-2 my-4 hover:bg-gray-100 rounded"
         ><FontAwesomeIcon className='h-5 w-5 mr-2' icon={faBackward } />{user.name}
       </Link>
-    </li> :  <li className="border-b md:border-none">
+    </li>
+     :  <li className="border-b md:border-none">
       <Link to="/login"className="block px-8 py-2 my-4 hover:bg-gray-100 rounded"
         ><FontAwesomeIcon className='h-5 w-5 mr-2' icon={faRightToBracket} />Login
       </Link>
     </li> }
+
+    { user && 
+      <li className="border-b md:border-none">
+      <div  className="block px-8 py-2 my-4 hover:bg-gray-100 rounded" onClick={() => {
+        localStorage.removeItem("user")
+        navigate("/login")
+      }}
+        ><FontAwesomeIcon className='h-5 w-5 mr-2'  icon={faRightToBracket} />Lgout
+      </div>
+    </li>  }
   </ul>
   <div>{children}</div>
   </div>
