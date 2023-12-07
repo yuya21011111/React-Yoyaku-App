@@ -2,14 +2,19 @@ import React, { useEffect } from 'react'
 import { Form, message } from "antd"
 import { Link, useNavigate } from "react-router-dom"
 import { LogiinUser } from '../../apicalls/user'
+import { useDispatch } from 'react-redux'
+import { ShowLoader } from '../../redux/loaderSlice'
 
 
 function Login() {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
   const onFinish = async (values) => {
     // values.preventDefault()
     try {
+      dispatch(ShowLoader(true))
       const response = await LogiinUser(values)
+      dispatch(ShowLoader(false))
       if(response.success)
       {
         message.success(response.message)
@@ -27,6 +32,7 @@ function Login() {
       }
   
     } catch (error) {
+      dispatch(ShowLoader(false))
       message.error(error.message)
     }
   }

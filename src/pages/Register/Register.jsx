@@ -3,6 +3,8 @@ import { Form, message } from "antd"
 import { Link, useNavigate } from "react-router-dom"
 import { CreateUser } from '../../apicalls/user'
 import 'antd/dist/antd.css'
+import { useDispatch } from 'react-redux'
+import { ShowLoader } from '../../redux/loaderSlice'
 
 message.config({
   duration: 2,
@@ -12,9 +14,12 @@ message.config({
 
 function Register() {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
   const onFinish = async (values) => {
    try {
+    dispatch(ShowLoader(true))
     const respons = await CreateUser(values)
+    dispatch(ShowLoader(false))
     if(respons.success)
     {
       message.success(respons.message)
@@ -24,6 +29,7 @@ function Register() {
       throw new Error(respons.message)
     }
    } catch (error) {
+    dispatch(ShowLoader(false))
     message.error(error.message)
    }
   }

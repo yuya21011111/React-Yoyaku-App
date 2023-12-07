@@ -2,10 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-/* .spinner {
-    position: fixed;
+.spinner {
+    /* position: fixed;
     inset: 0;
     display: flex;
     justify-content: center;
-    align-items: center;
-} */
+    align-items: center; */
+    background-color: #ccccccc3;
+}

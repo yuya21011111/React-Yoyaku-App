@@ -3,7 +3,7 @@ import { Spin } from 'antd'
 
 function Spinner() {
   return (
-   <div className='fixed inset-0 flex justify-center items-center'>
+   <div className='spinner fixed inset-0 flex justify-center items-center'>
     <Spin size='large'></Spin>
    </div>
   )

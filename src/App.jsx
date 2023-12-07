@@ -5,14 +5,16 @@ import Register from "./pages/Register/Register"
 import Profile from "./pages/Profile/Profile"
 import ProtectedRoute from "./components/ProtectedRoute"
 import Spinner from "./components/Spinner"
+import { useSelector } from "react-redux"
 
 function App() {
-  
 
+  const { loading } = useSelector(state => state.loader)
+  console.log(loading)
   return (
     <div>
+      { loading && <Spinner /> }
       <BrowserRouter>
-      <Spinner />
         <Routes>
           <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>}></Route>
           <Route path="/login" element={<Login />}></Route>
