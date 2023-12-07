@@ -16,6 +16,7 @@ function ProtectedRoute({ children }) {
         }
     },[])
   return (
+    <>
     <div class="bg-blue-300">
     <header className="container mx-auto flex justify-between items-center text-white">
       <Link to="/">
@@ -68,8 +69,9 @@ function ProtectedRoute({ children }) {
       </div>
     </li>  }
   </ul>
-  <div>{children}</div>
   </div>
+  <div>{ children }</div>
+  </>
   )
 }
 
