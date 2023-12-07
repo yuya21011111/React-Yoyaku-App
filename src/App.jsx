@@ -4,6 +4,7 @@ import Login from "./pages/Login/Login"
 import Register from "./pages/Register/Register"
 import Profile from "./pages/Profile/Profile"
 import ProtectedRoute from "./components/ProtectedRoute"
+import Spinner from "./components/Spinner"
 
 function App() {
   
@@ -11,6 +12,7 @@ function App() {
   return (
     <div>
       <BrowserRouter>
+      <Spinner />
         <Routes>
           <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>}></Route>
           <Route path="/login" element={<Login />}></Route>
