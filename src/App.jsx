@@ -6,6 +6,8 @@ import Profile from "./pages/Profile/Profile"
 import ProtectedRoute from "./components/ProtectedRoute"
 import Spinner from "./components/Spinner"
 import { useSelector } from "react-redux"
+import AppFromMenu from "./pages/From/AppFromMenu"
+
 
 function App() {
 
@@ -20,6 +22,7 @@ function App() {
           <Route path="/login" element={<Login />}></Route>
           <Route path="/register" element={<Register />}></Route>
           <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>}></Route>
+          <Route path="/apply-menu" element={<ProtectedRoute><AppFromMenu /></ProtectedRoute>}></Route>
         </Routes>
       </BrowserRouter>
     </div>
