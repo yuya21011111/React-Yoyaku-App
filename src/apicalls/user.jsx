@@ -44,6 +44,8 @@ export const LogiinUser = async (payload) => {
         }
 
         const user = userSnapshots.docs[0].data()
+        console.log(userSnapshots.docs[0])
+        user.id = userSnapshots.docs[0].id
         const bytes = CryptoJS.AES.decrypt(user.password, "sheyjobs-lite")
         const originalPassword = bytes.toString(CryptoJS.enc.Utf8)
 
