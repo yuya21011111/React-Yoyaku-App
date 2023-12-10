@@ -1,13 +1,14 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Form, Row, Col, message } from 'antd'
 import 'antd/dist/antd.css'
 import { useDispatch } from 'react-redux'
 import { ShowLoader } from '../../redux/loaderSlice'
-import { AddStores } from '../../apicalls/Stores'
+import { AddStores, GetStoreById } from '../../apicalls/Stores'
 import { useNavigate } from 'react-router-dom'
 
 function AppFromMenu() {
     const [days, setDays] = useState([])
+    const [alreadyApplied, setAlreadyApplied] = useState(false)
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const onFinish = async (values) => {
@@ -18,7 +19,8 @@ function AppFromMenu() {
         const payload = {
             ...values,
             days,
-            userId: JSON.parse(localStorage.getItem("user")).id
+            userId: JSON.parse(localStorage.getItem("user")).id,
+            status: "pending"
         }
         const response = await AddStores(payload)
 
@@ -36,10 +38,31 @@ function AppFromMenu() {
         message.error(error.message)
       }
     } 
+
+    const checkIfAlreadyApplied = async () => {
+        try {
+            dispatch(ShowLoader(true))
+            const response = await GetStoreById(JSON.parse(localStorage.getItem("user")).id)
+            if(response.success)
+            {
+                setAlreadyApplied(true)
+            }
+            dispatch(ShowLoader(false))
+        } catch (error) {
+            dispatch(ShowLoader(true))
+            message.error(error.message)
+        }
+    }
+
+    useEffect(() => {
+        checkIfAlreadyApplied()
+    }, [])
   return (
     <>
     <div class="relative w-full mt-4 bg-white p-4">
-        <h2 className='text-gray-500 font-medium text-3xl'>ユーザーアカウント</h2>
+       {!alreadyApplied && (
+        <>
+           <h2 className='text-gray-500 font-medium text-3xl'>ユーザーアカウント</h2>
           <div class="w-full border-b border-gray-300 border-2"></div>
         <Form layout='vertical' onFinish={onFinish}>
         <Row className='flex justify-center'>
@@ -172,6 +195,13 @@ function AppFromMenu() {
             <button type='submit' className='border border-blue-400 bg-blue-800 text-white px-2 py-2 rounded-lg'>送信</button>
         </div>
       </Form>
+        </>
+       )}
+
+       {alreadyApplied && 
+       <div className='flex justify-center'>
+          <h3 className='text-red-500 text-2xl font-medium'>!!閲覧できる情報はございません。!!</h3>
+        </div>}
     </div>
     </>
   )
