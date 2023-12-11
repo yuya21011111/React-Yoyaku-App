@@ -1,11 +1,11 @@
-import { addDoc, collection, doc, getDoc, getDocs, query, where } from "firebase/firestore"
+import { addDoc, collection, doc, getDoc, getDocs, query, setDoc, where } from "firebase/firestore"
 import firestoreDatabase from "../firebaseConfig"
 
 
 export const AddStores = async (payload) => {
     try {
         console.log(1)
-        await addDoc(collection(firestoreDatabase, "stores"), payload)
+        await setDoc(doc(firestoreDatabase, "stores", payload.userId), payload)
         return {
             success: true,
             message: "正常に登録されました。"

@@ -200,7 +200,7 @@ function AppFromMenu() {
 
        {alreadyApplied && 
        <div className='flex justify-center'>
-          <h3 className='text-red-500 text-2xl font-medium'>!!閲覧できる情報はございません。!!</h3>
+          <h3 className='text-red-500 text-2xl font-medium'>既に登録済みになります。</h3>
         </div>}
     </div>
     </>
