@@ -41,3 +41,23 @@ export const GetStoreById = async (id) => {{
         }
     }
 }}
+
+export const GetAllStores = async () => {
+   try {
+    const stores = await getDocs(collection(firestoreDatabase, "stores"))
+    return {
+        success: true,
+        data: stores.docs.map((store) =>{
+          return {
+            ...store.data(),
+            id: store.id,
+          }
+        })
+    }
+   } catch (error) {
+    return {
+        success: false,
+        message: error.message,
+    }
+   }
+}
