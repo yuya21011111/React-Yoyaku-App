@@ -64,3 +64,23 @@ export const LogiinUser = async (payload) => {
         return error
     }
 }
+
+export const GetAllusers = async () => {
+    try {
+     const stores = await getDocs(collection(firestoreDatabase, "users"))
+     return {
+         success: true,
+         data: stores.docs.map((store) =>{
+           return {
+             ...store.data(),
+             id: store.id,
+           }
+         })
+     }
+    } catch (error) {
+     return {
+         success: false,
+         message: error.message,
+     }
+    }
+ }
