@@ -74,7 +74,10 @@ function StoresList() {
     },
     {
       title: "Status",
-      dataIndex: "status"
+      dataIndex: "status",
+      render: (text, record) => {
+        return text.toUpperCase()
+      }
     },
     {
       title: "Actions",
