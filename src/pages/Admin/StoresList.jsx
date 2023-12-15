@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { ShowLoader } from '../../redux/loaderSlice'
 import { message } from 'antd'
-import { GetAllStores } from '../../apicalls/Stores'
+import { GetAllStores, UpdateStore } from '../../apicalls/Stores'
 import { Table } from 'antd'
 
 function StoresList() {
@@ -25,6 +25,26 @@ function StoresList() {
       message.error(error.message)
     }
 
+  }
+
+  const changeStatus = async (payload) => {
+    try {
+      dispatch(ShowLoader(true))
+      console.log(1)
+      const response = await UpdateStore(payload)
+      dispatch(ShowLoader(false))
+      if(response.success)
+      {
+        getData()
+      }else
+      {
+        throw new Error(response.message)
+      }
+
+    } catch (error) {
+      message.error(error.message)
+      dispatch(ShowLoader(false))
+    }
   }
 
   useEffect(() => {
@@ -56,6 +76,50 @@ function StoresList() {
       title: "Status",
       dataIndex: "status"
     },
+    {
+      title: "Actions",
+      dataIndex: "actions",
+      render: (text, record) => {
+        if(record.status === "pending")
+        {
+          return (<div className='flex' >
+            <span className='border-b-2 mr-4 hover:bg-blue-500' onClick={() => changeStatus({
+              ...record,
+              status: "rejected",
+            })}>Reject</span>
+             <span className='border-b-2 hover:bg-blue-500'  onClick={() => changeStatus({
+              ...record,
+              status: "approved",
+            })}>Appprove</span>
+          </div>
+          )
+        }
+        if(record.status === "approved")
+        {
+          return (
+            <div className='flex'>
+              <span className='border-b-2 hover:bg-blue-500'  onClick={() => changeStatus({
+              ...record,
+              status: "blocked",
+            })}>Block</span>
+            </div>
+          )
+        }
+        if(record.status === "blocked")
+        {
+          return (
+            <div className='flex'>
+              <span className='border-b-2 hover:bg-blue-500'  onClick={() => changeStatus({
+              ...record,
+              status: "approved",
+            })}>
+                Unblock
+              </span>
+            </div>
+          )
+        }
+      }
+    }
   ]
   return (
     <div>

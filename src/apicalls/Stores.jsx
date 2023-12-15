@@ -1,5 +1,6 @@
 import { addDoc, collection, doc, getDoc, getDocs, query, setDoc, where } from "firebase/firestore"
 import firestoreDatabase from "../firebaseConfig"
+import { message } from "antd"
 
 
 export const AddStores = async (payload) => {
@@ -60,4 +61,19 @@ export const GetAllStores = async () => {
         message: error.message,
     }
    }
+}
+
+export const UpdateStore = async (payload) => {
+    try {
+        await setDoc(doc(firestoreDatabase, "stores", payload.id),payload)
+        return {
+            success: true,
+            message: "情報を更新しました。",
+        }
+    } catch (error) {
+        return {
+            success: false,
+            message: error.message,
+        }
+    }
 }
