@@ -46,11 +46,8 @@ function UsersList() {
     },
     {
       title: "Role",
-      dataIndex: "role"
-    },
-    {
-      title: "Status",
-      dataIndex: "status"
+      dataIndex: "role",
+      render: (role) => role.toUpperCase()
     },
   ]
   return (

@@ -20,7 +20,8 @@ function AppFromMenu() {
             ...values,
             days,
             userId: JSON.parse(localStorage.getItem("user")).id,
-            status: "pending"
+            status: "pending",
+            role: "common"
         }
         const response = await AddStores(payload)
 
