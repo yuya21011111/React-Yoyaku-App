@@ -86,11 +86,11 @@ function StoresList() {
         if(record.status === "pending")
         {
           return (<div className='flex' >
-            <span className='mr-2 shadow-lg px-2 py-1 bg-gray-400 text-sm text-white font-medium rounded hover:bg-gray-500 hover:shadow-sm hover:translate-y-0.5 transform transition' onClick={() => changeStatus({
+            <span className='mr-2 shadow-lg px-2 py-1 bg-gray-400 text-sm text-white font-medium rounded hover:bg-gray-500 hover:shadow-sm hover:translate-y-0.5 transform transition cursor-pointer' onClick={() => changeStatus({
               ...record,
               status: "rejected",
             })}>Reject</span>
-             <span className='shadow-lg px-2 py-1 bg-gray-400 text-sm text-white font-medium rounded hover:bg-gray-500 hover:shadow-sm hover:translate-y-0.5 transform transition'  onClick={() => changeStatus({
+             <span className='shadow-lg px-2 py-1 bg-gray-400 text-sm text-white font-medium rounded hover:bg-gray-500 hover:shadow-sm hover:translate-y-0.5 transform transition cursor-pointer'  onClick={() => changeStatus({
               ...record,
               status: "approved",
             })}>Appprove</span>
@@ -101,7 +101,7 @@ function StoresList() {
         {
           return (
             <div className='flex'>
-              <span className='shadow-lg px-2 py-1 bg-gray-400 text-sm text-white font-medium rounded hover:bg-gray-500 hover:shadow-sm hover:translate-y-0.5 transform transition'  onClick={() => changeStatus({
+              <span className='shadow-lg px-2 py-1 bg-gray-400 text-sm text-white font-medium rounded hover:bg-gray-500 hover:shadow-sm hover:translate-y-0.5 transform transition cursor-pointer'  onClick={() => changeStatus({
               ...record,
               status: "blocked",
             })}>Block</span>
@@ -112,7 +112,7 @@ function StoresList() {
         {
           return (
             <div className='flex'>
-              <span className='shadow-lg px-2 py-1 bg-gray-400 text-sm text-white font-medium rounded hover:bg-gray-500 hover:shadow-sm hover:translate-y-0.5 transform transition'  onClick={() => changeStatus({
+              <span className='shadow-lg px-2 py-1 bg-gray-400 text-sm text-white font-medium rounded hover:bg-gray-500 hover:shadow-sm hover:translate-y-0.5 transform transition cursor-pointer'  onClick={() => changeStatus({
               ...record,
               status: "approved",
             })}>
