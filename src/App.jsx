@@ -8,6 +8,7 @@ import Spinner from "./components/Spinner"
 import { useSelector } from "react-redux"
 import AppFromMenu from "./pages/From/AppFromMenu"
 import Admin from "./pages/Admin/Admin"
+import Show from "./pages/Show/Show"
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
           <Route path="/register" element={<Register />}></Route>
           <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>}></Route>
           <Route path="/apply-menu" element={<ProtectedRoute><AppFromMenu /></ProtectedRoute>}></Route>
+          <Route path="/show/:id" element={<ProtectedRoute><Show /></ProtectedRoute>}></Route>
           <Route path="/admin" element={<ProtectedRoute><Admin /></ProtectedRoute>}></Route>
         </Routes>
       </BrowserRouter>

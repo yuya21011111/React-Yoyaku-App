@@ -47,7 +47,7 @@ function Home() {
       {stores.map((store) => {
         return (
           <Col span={8}>
-            <div className='flex flex-col gap-1 bg-white p-1 cursor-pointer' onClick={() => navigate(`/book-appointment/${store.id}`)}>
+            <div className='flex flex-col gap-1 bg-white p-1 cursor-pointer' onClick={() => navigate(`/show/${store.id}`)}>
               <div className='flex justify-between'> 
               <h4>
                 <b>

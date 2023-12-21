@@ -81,3 +81,18 @@ export const UpdateStore = async (payload) => {
         }
     }
 }
+
+export const GetStoreId = async (id) => {
+    try {
+        const store = await getDoc(doc(firestoreDatabase, "stores", id))
+        return {
+            success: true,
+            data: store.data()
+        }
+    } catch (error) {
+        return {
+            success: false,
+            message: error.message,
+        }
+    }
+}

@@ -20,7 +20,7 @@ function ProtectedRoute({ children }) {
     <div class="bg-blue-300">
     <header className="container mx-auto flex justify-between items-center text-white">
       <Link to="/">
-      <h1 className="text-4xl font-semibold">test</h1>
+      <h1 className="text-4xl font-semibold text-gray-700">出勤表</h1>
       </Link>
     </header>
     <ul className="md:flex justify-end">
