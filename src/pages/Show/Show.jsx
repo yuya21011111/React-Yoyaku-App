@@ -6,6 +6,7 @@ import { GetStoreId } from '../../apicalls/Stores'
 import { message } from 'antd'
 
 function Show() {
+    const [date = "", setDate] = useState("")
     const [store, setStore] = useState(null)
     const { id } = useParams()
     const dispatch = useDispatch()
@@ -24,6 +25,11 @@ function Show() {
             message.error(error.message)
             dispatch(ShowLoader(false))
         }
+    }
+
+
+    const getSlotsData = () => {
+        return
     }
 
     useEffect(() => {
@@ -57,12 +63,25 @@ function Show() {
                     <div className='flex justify-between'>
                         <h4>
                             <b>
-                             Phone:
+                                Phone:
                             </b>
                         </h4>
                         <h4 className='text-gray-700 font-medium text-2xl'>{store.phone}</h4>
                     </div>
                 </div>
+            </div>
+
+            <div className='flex flex-col gap-1'>
+                <div className='flex gap-2'>
+                    <h4>
+                        <b>
+                            Date:
+                        </b>
+                    </h4>
+                    <input className='border border-black' type='date' value={date} onChange={(e) => setDate(e.target.value)} />
+                    <button className='border border-blue-400 text-white bg-blue-500 rounded-full px-4 py-2'>検索</button>
+                </div>
+                {date && getSlotsData()}
             </div>
         </div>
         )
