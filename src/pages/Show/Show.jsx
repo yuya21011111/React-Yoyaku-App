@@ -4,6 +4,8 @@ import { useParams } from 'react-router-dom'
 import { ShowLoader } from '../../redux/loaderSlice'
 import { GetStoreId } from '../../apicalls/Stores'
 import { message } from 'antd'
+import moment from 'moment'
+import 'moment/locale/ja';
 
 function Show() {
     const [date = "", setDate] = useState("")
@@ -29,7 +31,11 @@ function Show() {
 
 
     const getSlotsData = () => {
-        return
+        moment.locale('ja');
+        const day = moment(date).format('dddd')
+        return <>
+        {day}
+        </>
     }
 
     useEffect(() => {
@@ -59,7 +65,7 @@ function Show() {
                     </h4>
                     <h4 className='text-gray-700 font-medium text-2xl'>{store.email}</h4>
                 </div>
-                <div className='flex flex-col gap-1 bg-white p-1 border-b-2 border-gray-300'>
+                <div className='flex flex-col gap-1 bg-white p-1'>
                     <div className='flex justify-between'>
                         <h4>
                             <b>
@@ -70,8 +76,17 @@ function Show() {
                     </div>
                 </div>
             </div>
-
-            <div className='flex flex-col gap-1'>
+            <div className='flex flex-col gap-1 bg-white p-1 border-b-2 border-gray-300'>
+                    <div className='flex justify-between'>
+                        <h4>
+                            <b>
+                                Days:
+                            </b>
+                        </h4>
+                        <h4 className='text-gray-700 font-medium text-2xl'>{store.days.join(',')}</h4>
+                    </div>
+                </div>
+            <div className='mt-4 flex flex-col gap-1'>
                 <div className='flex gap-2'>
                     <h4>
                         <b>
