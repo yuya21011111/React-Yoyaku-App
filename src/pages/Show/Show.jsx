@@ -5,7 +5,7 @@ import { ShowLoader } from '../../redux/loaderSlice'
 import { GetStoreId } from '../../apicalls/Stores'
 import { message } from 'antd'
 import moment from 'moment'
-import 'moment/locale/ja';
+
 
 function Show() {
     const [date = "", setDate] = useState("")
@@ -31,10 +31,41 @@ function Show() {
 
 
     const getSlotsData = () => {
-        moment.locale('ja');
         const day = moment(date).format('dddd')
+        var dayOfweek
+        if(day === "Monday")
+        {
+            dayOfweek = "月"
+        }
+        else if(day === "Tuesday")
+        {
+            dayOfweek = "火"
+        }
+        else if(day === "Wednesday")
+        {
+            dayOfweek = "水"
+        }
+        else if(day === "Thursday")
+        {
+            dayOfweek = "木"
+        }
+        else if(day === "Friday")
+        {
+            dayOfweek = "金"
+        }
+        else if(day === "Saturday")
+        {
+            dayOfweek = "土"
+        }
+        else if(day === "Sunday")
+        {
+            dayOfweek = "日"
+        }
+        if(!store.days.includes(dayOfweek))
+        {
+            return <h3 className='text-red-500 font-medium'>{moment(date).format("YYYY-MM-DD")}（{dayOfweek}）の出勤予定はございません。</h3>
+        }
         return <>
-        {day}
         </>
     }
 
@@ -93,7 +124,12 @@ function Show() {
                             Date:
                         </b>
                     </h4>
-                    <input className='border border-black' type='date' value={date} onChange={(e) => setDate(e.target.value)} />
+                    <input className='border border-black' 
+                    type='date' 
+                    value={date} 
+                    onChange={(e) => setDate(e.target.value)}
+                    min={moment().format("YYYY-MM-DD")}
+                     />
                     <button className='border border-blue-400 text-white bg-blue-500 rounded-full px-4 py-2'>検索</button>
                 </div>
                 {date && getSlotsData()}
