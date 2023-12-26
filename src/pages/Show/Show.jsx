@@ -10,6 +10,7 @@ import moment from 'moment'
 function Show() {
     const [date = "", setDate] = useState("")
     const [store, setStore] = useState(null)
+    const [selectedSlot = "", setSelectedSlot]  = useState("")
     const { id } = useParams()
     const dispatch = useDispatch()
 
@@ -64,9 +65,24 @@ function Show() {
         if(!store.days.includes(dayOfweek))
         {
             return <h3 className='text-red-500 font-medium'>{moment(date).format("YYYY-MM-DD")}（{dayOfweek}）の出勤予定はございません。</h3>
+        }else
+        {
+            let startTime = moment(store.startime, "HH:mm")
+            let endTime = moment(store.endtime, "HH:mm")
+            let slotDuration = 60
+            let slots = []
+            while(startTime < endTime) {
+                slots.push(startTime.format("HH:mm"))
+                startTime.add(slotDuration, "minutes")
+            }
+           return <>
+             {slots.map((slot) => {
+                return (
+                    <span className='text-red-500 border border-gray-500 p-1 cursor-pointer' onClick={() => selectedSlot(slot)}>{slot} - {moment(slot, "HH:mm A").add(slotDuration, "minutes").format("HH:mm A")}</span>
+                )
+             })}
+           </>
         }
-        return <>
-        </>
     }
 
     useEffect(() => {
@@ -132,7 +148,9 @@ function Show() {
                      />
                     <button className='border border-blue-400 text-white bg-blue-500 rounded-full px-4 py-2'>検索</button>
                 </div>
+                <div className='mt-4 flex gap-2'>
                 {date && getSlotsData()}
+                </div>
             </div>
         </div>
         )
