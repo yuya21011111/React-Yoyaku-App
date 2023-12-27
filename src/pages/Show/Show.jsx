@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { ShowLoader } from '../../redux/loaderSlice'
 import { GetStoreId } from '../../apicalls/Stores'
 import { message } from 'antd'
@@ -8,6 +8,7 @@ import moment from 'moment'
 
 
 function Show() {
+    const navigate = useNavigate()
     const [date = "", setDate] = useState("")
     const [store, setStore] = useState(null)
     const [selectedSlot = "", setSelectedSlot]  = useState("")
@@ -78,7 +79,10 @@ function Show() {
            return <>
              {slots.map((slot) => {
                 return (
-                    <span className='text-red-500 border border-gray-500 p-1 cursor-pointer' onClick={() => selectedSlot(slot)}>{slot} - {moment(slot, "HH:mm A").add(slotDuration, "minutes").format("HH:mm A")}</span>
+                    <span className='text-red-500 p-1 cursor-pointer' onClick={() => setSelectedSlot(slot)}
+                    style={{
+                        border : selectedSlot === slot ? "2px solid green" : "1px solid gray"
+                    }}>{slot} - {moment(slot, "HH:mm A").add(slotDuration, "minutes").format("HH:mm A")}</span>
                 )
              })}
            </>
@@ -151,6 +155,12 @@ function Show() {
                 <div className='mt-4 flex gap-2'>
                 {date && getSlotsData()}
                 </div>
+                {selectedSlot && 
+                <div className='flex justify-end gap-2'>
+                    <button className='bg-green-500 p-1 text-white px-2 py-2 rounded-full'>詳細</button>
+                    <button className='bg-red-500 p-1 text-white px-2 py-2 rounded-full'
+                    onClick={() => navigate("/")}>戻る</button>
+                </div>}
             </div>
         </div>
         )
