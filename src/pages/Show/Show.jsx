@@ -5,6 +5,7 @@ import { ShowLoader } from '../../redux/loaderSlice'
 import { GetStoreId } from '../../apicalls/Stores'
 import { message } from 'antd'
 import moment from 'moment'
+import { ShowDetail } from '../../apicalls/OnShow'
 
 
 function Show() {
@@ -89,6 +90,43 @@ function Show() {
         }
     }
 
+    const onShow = async() => {
+        try {
+            dispatch(ShowLoader(true))
+            const payload = {
+               storeId: store.id,
+               userId : JSON.parse(localStorage.getItem("user")).id,
+               date,
+               slot: selectedSlot,
+               storeName: `${store.firstName} ${store.lastName}`,
+               userName: JSON.parse(localStorage.getItem("user")).name,
+               bookeOn: moment().format("DD-MM-YYYY HH:mm A")
+            }
+            const response = await ShowDetail(payload)
+            if(response.success)
+            {
+                message.success(response.message)
+                navigate("/profile")
+            }else
+            {
+                message.error(response.message)
+            }
+            dispatch(ShowLoader(false))
+        } catch (error) {
+            message.error(error.message)
+            dispatch(ShowLoader(false))
+        }
+    }
+
+    const getBookedSlots = () => {
+        try {
+            
+        } catch (error) {
+            dispatch(ShowLoader(false))
+            message.error(error.message)
+        }
+    }
+
     useEffect(() => {
         getData()
     }, [id])
@@ -157,7 +195,7 @@ function Show() {
                 </div>
                 {selectedSlot && 
                 <div className='flex justify-end gap-2'>
-                    <button className='bg-green-500 p-1 text-white px-2 py-2 rounded-full'>詳細</button>
+                    <button className='bg-green-500 p-1 text-white px-2 py-2 rounded-full' onClick={onShow}>詳細</button>
                     <button className='bg-red-500 p-1 text-white px-2 py-2 rounded-full'
                     onClick={() => navigate("/")}>戻る</button>
                 </div>}
