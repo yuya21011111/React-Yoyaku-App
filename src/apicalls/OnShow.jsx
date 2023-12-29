@@ -18,6 +18,8 @@ export const ShowDetail = async (payload) => {
 
 export const GetShowDetail = async (storeId, date) => {
     try {
+        console.log(storeId)
+        console.log(date)
         const querySnapshot = await getDocs(
             query(
                 collection(firestoreDatabase, "showdetail"),

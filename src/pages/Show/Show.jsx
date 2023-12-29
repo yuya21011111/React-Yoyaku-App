@@ -5,7 +5,7 @@ import { ShowLoader } from '../../redux/loaderSlice'
 import { GetStoreId } from '../../apicalls/Stores'
 import { message } from 'antd'
 import moment from 'moment'
-import { ShowDetail } from '../../apicalls/OnShow'
+import { GetShowDetail, ShowDetail } from '../../apicalls/OnShow'
 
 
 function Show() {
@@ -15,6 +15,7 @@ function Show() {
     const [selectedSlot = "", setSelectedSlot]  = useState("")
     const { id } = useParams()
     const dispatch = useDispatch()
+    const [bookedSlots = [], setBookedSlots] = useState([])
 
     const getData = async () => {
         try {
@@ -74,7 +75,10 @@ function Show() {
             let slotDuration = 60
             let slots = []
             while(startTime < endTime) {
-                slots.push(startTime.format("HH:mm"))
+                if(!bookedSlots?.find((slot) => slot.slot === startTime.format("HH:mm")))
+                {
+                    slots.push(startTime.format("HH:mm"))
+                }
                 startTime.add(slotDuration, "minutes")
             }
            return <>
@@ -118,9 +122,18 @@ function Show() {
         }
     }
 
-    const getBookedSlots = () => {
+    const getBookedSlots = async () => {
         try {
-            
+            dispatch(ShowLoader(true))
+            const response = await GetShowDetail(id,date)
+            dispatch(ShowLoader(false))
+            if(response.success)
+            {
+                setBookedSlots(response.data)
+            }else
+            {
+                message.error(response.message)
+            }
         } catch (error) {
             dispatch(ShowLoader(false))
             message.error(error.message)
@@ -130,6 +143,13 @@ function Show() {
     useEffect(() => {
         getData()
     }, [id])
+
+    useEffect(() => {
+        if(date)
+        {
+            getBookedSlots()
+        }
+    },[date])
     return (
         store && (<div className='mt-4 bg-white p-8'>
             <h1 className='text-gray-500 text-2xl border-b-2 border-gray-300'>
