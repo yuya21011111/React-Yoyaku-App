@@ -1,5 +1,5 @@
 import firestoreDatabase from "../firebaseConfig"
-import { addDoc,collection, getDocs, query, where } from "firebase/firestore"
+import { addDoc,collection, doc, getDocs, query, where } from "firebase/firestore"
 
 export const ShowDetail = async (payload) => {
     try {
@@ -29,16 +29,17 @@ export const GetShowDetail = async (storeId, date) => {
         )
         const data = []
         querySnapshot.forEach((doc) => {
-            data.push(doc.data)
+            data.push(doc.data())
         })
+      
         return {
             success: true,
-            data
+            data,
         }
     } catch (error) {
         return {
             success: false,
-            message: error.message
+            message: error.message,
         }
     }
 }

@@ -75,18 +75,24 @@ function Show() {
             let slotDuration = 60
             let slots = []
             while(startTime < endTime) {
-                if(!bookedSlots?.find((slot) => slot.slot === startTime.format("HH:mm")))
-                {
-                    slots.push(startTime.format("HH:mm"))
-                }
+                // if(!bookedSlots?.find((slot) => slot.slot === startTime.format("HH:mm")))
+                // {
+                // }
+                slots.push(startTime.format("HH:mm"))
                 startTime.add(slotDuration, "minutes")
             }
            return <>
              {slots.map((slot) => {
+               
+                const isBooked = bookedSlots?.find((booked) => booked.slot == slot )
                 return (
                     <span className='text-red-500 p-1 cursor-pointer' onClick={() => setSelectedSlot(slot)}
                     style={{
-                        border : selectedSlot === slot ? "2px solid green" : "1px solid gray"
+                        border : selectedSlot === slot ? "2px solid green" : "1px solid gray",
+                        backgroundColor: isBooked ? "gray" : "white",
+                        pointerEvents: isBooked ? "none" : "auto",
+                        cursor: isBooked ? "not-allowed" : "pointer",
+
                     }}>{slot} - {moment(slot, "HH:mm A").add(slotDuration, "minutes").format("HH:mm A")}</span>
                 )
              })}
@@ -122,13 +128,14 @@ function Show() {
         }
     }
 
-    const getBookedSlots = async () => {
+    const getBookedSlots = async() => {
         try {
             dispatch(ShowLoader(true))
             const response = await GetShowDetail(id,date)
             dispatch(ShowLoader(false))
             if(response.success)
             {
+                console.log(response.data)
                 setBookedSlots(response.data)
             }else
             {
@@ -150,6 +157,7 @@ function Show() {
             getBookedSlots()
         }
     },[date])
+
     return (
         store && (<div className='mt-4 bg-white p-8'>
             <h1 className='text-gray-500 text-2xl border-b-2 border-gray-300'>
