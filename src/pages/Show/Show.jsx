@@ -10,6 +10,7 @@ import { GetShowDetail, ShowDetail } from '../../apicalls/OnShow'
 
 function Show() {
     const navigate = useNavigate()
+    const [problem = "", setProblem] = useState()
     const [date = "", setDate] = useState("")
     const [store, setStore] = useState(null)
     const [selectedSlot = "", setSelectedSlot]  = useState("")

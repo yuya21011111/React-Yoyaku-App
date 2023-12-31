@@ -43,3 +43,27 @@ export const GetShowDetail = async (storeId, date) => {
         }
     }
 }
+
+export const GetUserDetail = async (userId) => {
+    try {
+        const querySnapshot = await getDocs(
+            query(
+                collection(firestoreDatabase, "showdetail"),
+                where("userId", "==", userId)
+            )
+        )
+        const data = []
+        querySnapshot.forEach((user) => {
+            data.push(user.data())
+        })
+        return {
+            success: true,
+            data
+        }
+    } catch (error) {
+        return {
+            success: false,
+            message: error.message
+        }
+    }
+}
