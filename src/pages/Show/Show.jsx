@@ -85,7 +85,7 @@ function Show() {
            return <>
              {slots.map((slot) => {
                
-                const isBooked = bookedSlots?.find((booked) => booked.slot == slot )
+                const isBooked = bookedSlots?.find((booked) => booked.slot == slot && booked.status !== "cancelled" )
                 return (
                     <span className='text-red-500 p-1 cursor-pointer' onClick={() => setSelectedSlot(slot)}
                     style={{
@@ -111,7 +111,9 @@ function Show() {
                slot: selectedSlot,
                storeName: `${store.firstName} ${store.lastName}`,
                userName: JSON.parse(localStorage.getItem("user")).name,
-               bookeOn: moment().format("DD-MM-YYYY HH:mm A")
+               bookeOn: moment().format("DD-MM-YYYY HH:mm A"),
+               problem,
+               status: "pending",
             }
             const response = await ShowDetail(payload)
             if(response.success)
@@ -222,12 +224,17 @@ function Show() {
                 <div className='mt-4 flex gap-2'>
                 {date && getSlotsData()}
                 </div>
-                {selectedSlot && 
+                {selectedSlot && <>
+                <div>
+                    <textarea className='border border-black' value={problem} onChange={(e) => setProblem(e.target.value)} rows="10" cols="80" placeholder='作業内容'> </textarea>
+                </div>
                 <div className='flex justify-end gap-2'>
-                    <button className='bg-green-500 p-1 text-white px-2 py-2 rounded-full' onClick={onShow}>詳細</button>
+                    <button className='bg-green-500 p-1 text-white px-2 py-2 rounded-full' onClick={onShow}>決定</button>
                     <button className='bg-red-500 p-1 text-white px-2 py-2 rounded-full'
                     onClick={() => navigate("/")}>戻る</button>
-                </div>}
+                </div>
+                </>
+                }
             </div>
         </div>
         )

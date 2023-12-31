@@ -1,5 +1,5 @@
 import firestoreDatabase from "../firebaseConfig"
-import { addDoc,collection, doc, getDocs, query, where } from "firebase/firestore"
+import { addDoc,collection, doc, getDocs, query, updateDoc, where } from "firebase/firestore"
 
 export const ShowDetail = async (payload) => {
     try {
@@ -54,11 +54,32 @@ export const GetUserDetail = async (userId) => {
         )
         const data = []
         querySnapshot.forEach((user) => {
-            data.push(user.data())
+            data.push({
+            ...user.data(),
+            id: user.id,
+        })
         })
         return {
             success: true,
             data
+        }
+    } catch (error) {
+        return {
+            success: false,
+            message: error.message
+        }
+    }
+}
+
+export const updateUser = async (id, status) => {
+    try {
+        console.log("update123")
+        await updateDoc(doc(firestoreDatabase, "showdetail", id),{
+            status,
+        })
+        return {
+            success: true,
+            message: "正常に情報が更新されました。"
         }
     } catch (error) {
         return {
