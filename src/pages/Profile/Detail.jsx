@@ -73,6 +73,7 @@ function Detail() {
             render: (text, record) => {
                 const user = JSON.parse(localStorage.getItem("user"))
                 if(record.status === "pending" && user.role === "admin")
+                // if(user.role === "user" || user.role === "admin")
                 {
                     return <div>
                           <span  className='mr-2 shadow-lg px-2 py-1 bg-gray-400 text-sm text-white font-medium rounded hover:bg-gray-500 hover:shadow-sm hover:translate-y-0.5 transform transition cursor-pointer'  onClick={() => onUpdate(record.id, "cancelled")}>

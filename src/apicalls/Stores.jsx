@@ -5,11 +5,10 @@ import { message } from "antd"
 
 export const AddStores = async (payload) => {
     try {
-        console.log(1)
         await setDoc(doc(firestoreDatabase, "stores", payload.userId), payload)
 
         await updateDoc(doc(firestoreDatabase, "users",payload.userId),{
-            role: "common"
+            role: "user"
         })
         return {
             success: true,
