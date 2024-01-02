@@ -3,6 +3,7 @@ import { addDoc,collection, doc, getDocs, query, updateDoc, where } from "fireba
 
 export const ShowDetail = async (payload) => {
     try {
+        console.log("shoedetak")
         await addDoc(collection(firestoreDatabase, "showdetail"), payload)
         return {
             success: true,

@@ -49,15 +49,16 @@ function ProtectedRoute({ children }) {
 
     { user ?  
     <li className="border-b md:border-none">
-      <Link to="/profile"className="block px-8 py-2 my-4 hover:bg-gray-100 rounded"
+      <div className="block px-8 py-2 my-4 hover:bg-gray-100 rounded" onClick={() => { if(user.role === "admin"){ navigate("/admin")} else{ navigate("/profile") } }}
         ><FontAwesomeIcon className='h-5 w-5 mr-2' icon={faBackward } />{user.name}
-      </Link>
+      </div>
     </li>
      :  <li className="border-b md:border-none">
       <Link to="/login"className="block px-8 py-2 my-4 hover:bg-gray-100 rounded"
         ><FontAwesomeIcon className='h-5 w-5 mr-2' icon={faRightToBracket} />Login
       </Link>
     </li> }
+
 
     { user && 
       <li className="border-b md:border-none">

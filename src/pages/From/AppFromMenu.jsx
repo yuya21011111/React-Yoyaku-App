@@ -7,8 +7,10 @@ import { AddStores, GetStoreById } from '../../apicalls/Stores'
 import { useNavigate } from 'react-router-dom'
 
 function AppFromMenu() {
+    const [alreadyApproved, setAlreadyApproved] = useState(false)
     const [days, setDays] = useState([])
     const [alreadyApplied, setAlreadyApplied] = useState(false)
+    const a = true
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const onFinish = async (values) => {
@@ -44,9 +46,14 @@ function AppFromMenu() {
         try {
             dispatch(ShowLoader(true))
             const response = await GetStoreById(JSON.parse(localStorage.getItem("user")).id)
+            
             if(response.success)
             {
                 setAlreadyApplied(true)
+                if(response.data.status === "approved")
+                {
+                    setAlreadyApproved(true)
+                }
             }
             dispatch(ShowLoader(false))
         } catch (error) {
@@ -61,8 +68,9 @@ function AppFromMenu() {
   return (
     <>
     <div class="relative w-full mt-4 bg-white p-4">
-       {!alreadyApplied && (
+       { !alreadyApplied  && (
         <>
+        {""}
            <h2 className='text-gray-500 font-medium text-3xl'>ユーザーアカウント</h2>
           <div class="w-full border-b border-gray-300 border-2"></div>
         <Form layout='vertical' onFinish={onFinish}>
@@ -199,10 +207,10 @@ function AppFromMenu() {
         </>
        )}
 
-       {alreadyApplied && 
+       {alreadyApplied && !alreadyApproved &&  (
        <div className='flex justify-center'>
           <h3 className='text-red-500 text-2xl font-medium'>既に登録済みになります。</h3>
-        </div>}
+        </div>)}
     </div>
     </>
   )

@@ -32,7 +32,13 @@ export const GetStoreById = async (id) => {{
        {
         return {
             success: true,
-            message: "正常に登録されています。"
+            message: "正常に登録されています。",
+            data : stores.docs.map((store) => {
+                return {
+                    ...store.data(),
+                    id: doc.id
+                }
+            })[0]
         }
        }
        return {

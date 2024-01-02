@@ -104,8 +104,9 @@ function Show() {
     const onShow = async() => {
         try {
             dispatch(ShowLoader(true))
+           
             const payload = {
-               storeId: store.id,
+            //    storeId: store.id,
                userId : JSON.parse(localStorage.getItem("user")).id,
                date,
                slot: selectedSlot,

@@ -9,6 +9,7 @@ import 'antd/dist/antd.css'
 function Home() {
   const [stores, setStores] = useState([])
   const dispatch = useDispatch()
+  const user = JSON.parse(localStorage.getItem('user'))
 
   const getData = async () => {
     try {
@@ -37,7 +38,9 @@ function Home() {
       <div className='text-center text-lg font-medium text-white'>Apply Reservation</div>
       <div className='flex justify-center'>
         <input className='border border-gray-500' placeholder='search' />
-        <button className='ml-1 border border-gray-500 bg-gray-500 rounded-full text-white' onClick={() => navigate("/apply-menu")}>検索</button>
+       {user.role !== "user" && (
+         <button className='ml-1 border border-gray-500 bg-gray-500 rounded-full text-white' onClick={() => navigate("/apply-menu")}>検索</button>
+       )}
       </div>
     </section>
     <section>

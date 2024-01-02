@@ -29,9 +29,11 @@ function Detail() {
     }
 
     const getData = async () => {
+        console.log("111")
         const user = JSON.parse(localStorage.getItem("user"))
-        if(user.role === "user" || user.role === "admin")
+        if(user.role === "user" || user.role === "admin" ||　user.role === "common")
         {
+            console.log(user.id)
             const response = await GetUserDetail(user.id)
             if(response.success)
             {
