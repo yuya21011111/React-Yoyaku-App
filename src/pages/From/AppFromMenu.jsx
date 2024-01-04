@@ -13,6 +13,7 @@ function AppFromMenu() {
     const a = true
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    
     const onFinish = async (values) => {
         console.log(values)
         console.log(days)
@@ -23,7 +24,7 @@ function AppFromMenu() {
             days,
             userId: JSON.parse(localStorage.getItem("user")).id,
             status: "pending",
-            role: "user"
+            role: "common"
         }
         const response = await AddStores(payload)
 

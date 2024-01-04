@@ -8,7 +8,7 @@ export const AddStores = async (payload) => {
         await setDoc(doc(firestoreDatabase, "stores", payload.userId), payload)
 
         await updateDoc(doc(firestoreDatabase, "users",payload.userId),{
-            role: "user"
+            role: "common"
         })
         return {
             success: true,

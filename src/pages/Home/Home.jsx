@@ -38,7 +38,7 @@ function Home() {
       <div className='text-center text-lg font-medium text-white'>Apply Reservation</div>
       <div className='flex justify-center'>
         <input className='border border-gray-500' placeholder='search' />
-       {user.role !== "user" && (
+       {user.role !== "common" && (
          <button className='ml-1 border border-gray-500 bg-gray-500 rounded-full text-white' onClick={() => navigate("/apply-menu")}>検索</button>
        )}
       </div>

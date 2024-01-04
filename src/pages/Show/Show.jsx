@@ -68,7 +68,7 @@ function Show() {
         }
         if(!store.days.includes(dayOfweek))
         {
-            return <h3 className='text-red-500 font-medium'>{moment(date).format("YYYY-MM-DD")}（{dayOfweek}）の出勤予定はございません。</h3>
+            return <h3 className='text-red-500 font-medium'>{moment(date).format("YYYY-MM-DD")}（{dayOfweek}）の予定はございません。</h3>
         }else
         {
             let startTime = moment(store.startime, "HH:mm")
@@ -106,7 +106,7 @@ function Show() {
             dispatch(ShowLoader(true))
            
             const payload = {
-            //    storeId: store.id,
+               storeId: store.id,
                userId : JSON.parse(localStorage.getItem("user")).id,
                date,
                slot: selectedSlot,
