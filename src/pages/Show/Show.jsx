@@ -139,7 +139,6 @@ function Show() {
             dispatch(ShowLoader(false))
             if(response.success)
             {
-                console.log(response.data)
                 setBookedSlots(response.data)
             }else
             {

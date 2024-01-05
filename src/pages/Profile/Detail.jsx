@@ -1,6 +1,6 @@
 import { Table, message } from 'antd'
 import React, { useEffect, useState } from 'react'
-import { GetUserDetail, updateUser } from '../../apicalls/OnShow'
+import { GetAdminCommon, GetUserDetail, updateUser } from '../../apicalls/OnShow'
 import { useDispatch } from 'react-redux'
 import { ShowLoader } from '../../redux/loaderSlice'
 
@@ -29,12 +29,18 @@ function Detail() {
     }
 
     const getData = async () => {
-        console.log("111")
         const user = JSON.parse(localStorage.getItem("user"))
-        if(user.role === "user" || user.role === "admin" ||　user.role === "common")
+        if(user.role === "user")
         {
-            console.log(user.id)
             const response = await GetUserDetail(user.id)
+            if(response.success)
+            {
+                setDetail(response.data)
+            }
+        }
+        else if(user.role === "common" || user.role === "admin")
+        {
+            const response = await GetAdminCommon(user.id)
             if(response.success)
             {
                 setDetail(response.data)
@@ -50,6 +56,10 @@ function Detail() {
         {
             title: 'Time',
             dataIndex: 'slot'
+        },
+        {
+            title: 'FriendName',
+            dataIndex: 'storeName'
         },
         {
             title: 'User',

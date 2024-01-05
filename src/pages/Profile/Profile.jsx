@@ -13,7 +13,6 @@ function Profile() {
         <Tabs.TabPane tab="Detail" key="2">
           <Detail />
         </Tabs.TabPane>
-        <Tabs.TabPane tab="My Appointpoints" key="3"></Tabs.TabPane>
       </Tabs>
     </div>
   )

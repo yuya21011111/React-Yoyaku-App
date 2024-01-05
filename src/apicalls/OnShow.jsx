@@ -50,7 +50,7 @@ export const GetUserDetail = async (userId) => {
         const querySnapshot = await getDocs(
             query(
                 collection(firestoreDatabase, "showdetail"),
-                where("userId", "==", userId)
+                where("storeId", "==", userId)
             )
         )
         const data = []
@@ -59,6 +59,31 @@ export const GetUserDetail = async (userId) => {
             ...user.data(),
             id: user.id,
         })
+        })
+        return {
+            success: true,
+            data
+        }
+    } catch (error) {
+        return {
+            success: false,
+            message: error.message
+        }
+    }
+}
+
+export const GetAdminCommon = async (admincomonId) => {
+    try {
+        console.log("123")
+        const querySnapshot = await getDocs(
+            query(
+                collection(firestoreDatabase, "showdetail"),
+                where("userId", "==", admincomonId)
+            )
+        )
+        const data = []
+        querySnapshot.forEach((item) => {
+            data.push(item.data())
         })
         return {
             success: true,
