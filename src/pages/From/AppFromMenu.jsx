@@ -3,14 +3,14 @@ import { Form, Row, Col, message } from 'antd'
 import 'antd/dist/antd.css'
 import { useDispatch } from 'react-redux'
 import { ShowLoader } from '../../redux/loaderSlice'
-import { AddStores, GetStoreById } from '../../apicalls/Stores'
+import { AddStores, GetStoreById, UpdateStore } from '../../apicalls/Stores'
 import { useNavigate } from 'react-router-dom'
 
 function AppFromMenu() {
+    const [form] = Form.useForm()
     const [alreadyApproved, setAlreadyApproved] = useState(false)
     const [days, setDays] = useState([])
     const [alreadyApplied, setAlreadyApplied] = useState(false)
-    const a = true
     const dispatch = useDispatch()
     const navigate = useNavigate()
     
@@ -26,7 +26,14 @@ function AppFromMenu() {
             status: "pending",
             role: "common"
         }
-        const response = await AddStores(payload)
+        let response = null
+        if(alreadyApproved)
+        {
+            payload.id = JSON.parse(localStorage.getItem("user")).id
+            response = await UpdateStore(payload)
+        }else{
+            response = await AddStores(payload)
+        }
 
         if(response.success)
         {
@@ -56,6 +63,8 @@ function AppFromMenu() {
                 if(response.data.status === "approved")
                 {
                     setAlreadyApproved(true)
+                    form.setFieldsValue(response.data)
+                    setDays(response.data.days)
                 }
             }
             dispatch(ShowLoader(false))
@@ -73,9 +82,9 @@ function AppFromMenu() {
     <div class="relative w-full mt-4 bg-white p-4">
        { !alreadyApplied || alreadyApproved  && (
         <>
-           <h2 className='text-gray-500 font-medium text-3xl'>ユーザーアカウント</h2>
+          {alreadyApproved ?  <h2 className='text-gray-500 font-medium text-3xl'>更新画面</h2> :  <h2 className='text-gray-500 font-medium text-3xl'>新規登録</h2>}
           <div class="w-full border-b border-gray-300 border-2"></div>
-        <Form layout='vertical' onFinish={onFinish}>
+        <Form layout='vertical' onFinish={onFinish} form={form}>
         <Row className='flex justify-center'>
             <Col span={8}>
                 <Form.Item className='mt-4' label="姓:" name="firstName"
@@ -185,7 +194,7 @@ function AppFromMenu() {
                      {["月","火","水","木","金","土","日"].map((day, index) => (
                         <div>
                             <label>{day}</label>
-                        <input type="checkbox" key={index} value={day} 
+                        <input type="checkbox" key={index} value={day} checked={days.includes(day)}
                         onChange={(e) => {
                             if(e.target.checked)
                             {
