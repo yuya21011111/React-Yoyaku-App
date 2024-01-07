@@ -83,7 +83,11 @@ export const GetAdminCommon = async (admincomonId) => {
         )
         const data = []
         querySnapshot.forEach((item) => {
-            data.push(item.data())
+            data.push({
+                ...item.data(),
+                id: item.id,
+            }
+            )
         })
         return {
             success: true,
@@ -100,6 +104,7 @@ export const GetAdminCommon = async (admincomonId) => {
 export const updateUser = async (id, status) => {
     try {
         console.log("update123")
+        console.log(id)
         await updateDoc(doc(firestoreDatabase, "showdetail", id),{
             status,
         })

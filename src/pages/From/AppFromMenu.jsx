@@ -46,8 +46,10 @@ function AppFromMenu() {
     const checkIfAlreadyApplied = async () => {
         try {
             dispatch(ShowLoader(true))
-            const response = await GetStoreById(JSON.parse(localStorage.getItem("user")).id)
-            
+            const response = await GetStoreById(
+                JSON.parse(localStorage.getItem("user")).id
+                )
+                console.log(response.data.status)
             if(response.success)
             {
                 setAlreadyApplied(true)
@@ -69,7 +71,7 @@ function AppFromMenu() {
   return (
     <>
     <div class="relative w-full mt-4 bg-white p-4">
-       { !alreadyApplied  && (
+       { !alreadyApplied || alreadyApproved  && (
         <>
            <h2 className='text-gray-500 font-medium text-3xl'>ユーザーアカウント</h2>
           <div class="w-full border-b border-gray-300 border-2"></div>
@@ -207,7 +209,7 @@ function AppFromMenu() {
         </>
        )}
 
-       {alreadyApplied && (
+       {alreadyApplied && !alreadyApproved && (
        <div className='flex justify-center'>
           <h3 className='text-red-500 text-2xl font-medium'>既に登録済みになります。</h3>
         </div>)}

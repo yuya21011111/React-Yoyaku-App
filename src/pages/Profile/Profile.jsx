@@ -8,7 +8,7 @@ function Profile() {
     <div>
       <Tabs>
         <Tabs.TabPane tab="Profile" key="1">
-          {user.role === "admin" && <AppFromMenu />}
+          {user.role === "common" && <AppFromMenu />}
         </Tabs.TabPane>
         <Tabs.TabPane tab="Detail" key="2">
           <Detail />
