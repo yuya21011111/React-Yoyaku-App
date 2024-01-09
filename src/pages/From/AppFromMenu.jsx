@@ -30,6 +30,7 @@ function AppFromMenu() {
         if(alreadyApproved)
         {
             payload.id = JSON.parse(localStorage.getItem("user")).id
+            payload.status = "approved"
             response = await UpdateStore(payload)
         }else{
             response = await AddStores(payload)
